@@ -4,7 +4,7 @@
    ========================================================================== */
 
 // Point this at your running backend. Swap for your deployed URL when you host it.
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = 'https://mytube-backend-smzj.onrender.com';
 
 const TOKEN_KEY = 'mytube_token';
 
