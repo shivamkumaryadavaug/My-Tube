@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study Mode — MyTube</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/study.css">
+</head>
+<body>
+<div class="study-shell" id="studyRoot">
+
+  <div class="study-topbar">
+    <a href="library.html" class="back-link">← Back</a>
+    <span class="playlist-title" id="topbarPlaylistTitle">Loading…</span>
+    <button class="focus-badge" id="focusModeBtn">🎯 Focus Mode</button>
+  </div>
+
+  <div class="study-layout">
+    <div class="study-main">
+      <div class="player">
+        <div class="player-visual" id="playerVisual">
+          <span class="player-badge" id="mockPlayerTitle"></span>
+          <button class="player-play-btn" id="centerPlayBtn" aria-label="Play video">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+        </div>
+        <div class="player-controls">
+          <div class="player-scrub" id="playerScrub"><div class="player-scrub-fill" id="playerScrubFill"></div></div>
+          <div class="player-controls-row">
+            <div class="player-controls-left">
+              <button id="prevBtn" aria-label="Previous video">⏮</button>
+              <button id="playPauseBtn" aria-label="Play or pause"><span id="playIcon">▶</span></button>
+              <button id="nextBtn" aria-label="Next video">⏭</button>
+            </div>
+            <div class="player-controls-right">
+              <button aria-label="Volume">🔊</button>
+              <button id="fullscreenBtn" aria-label="Fullscreen">⛶</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="video-info">
+        <h1 id="videoTitle">Loading…</h1>
+        <p class="meta" id="videoMeta"></p>
+        <div style="margin-top:16px;">
+          <button class="btn btn-secondary btn-sm" id="markCompleteBtn">Mark as complete</button>
+        </div>
+        <div class="mock-note">This is a frontend prototype — playback is simulated. Real YouTube embedded playback connects here later.</div>
+      </div>
+    </div>
+
+    <aside class="study-side">
+      <div class="timer-card">
+        <div class="timer-label">Focus Session</div>
+        <div class="timer-ring-wrap">
+          <svg viewBox="0 0 172 172">
+            <circle class="timer-ring-bg" cx="86" cy="86" r="76"/>
+            <circle class="timer-ring-fill" id="timerRingFill" cx="86" cy="86" r="76" stroke-dasharray="477.5" stroke-dashoffset="0"/>
+          </svg>
+          <div class="timer-display">
+            <div class="timer-time" id="timerTime">25:00</div>
+            <div class="timer-sub">Stay focused</div>
+          </div>
+        </div>
+        <div class="timer-presets">
+          <button class="preset-btn" data-minutes="25" type="button">25 min</button>
+          <button class="preset-btn" data-minutes="50" type="button">50 min</button>
+          <button class="preset-btn" data-minutes="90" type="button">90 min</button>
+          <button class="preset-btn" id="customPresetBtn" type="button">Custom</button>
+        </div>
+        <div class="timer-actions">
+          <button class="btn btn-primary btn-block" id="timerStartBtn" type="button">Start Focus</button>
+          <button class="btn btn-icon" id="timerResetBtn" type="button" aria-label="Reset timer">↺</button>
+        </div>
+        <div class="timer-complete-msg" id="timerCompleteMsg">🎉 Focus session completed!</div>
+      </div>
+
+      <div class="queue-title" id="queuePlaylistTitle">Playlist</div>
+      <div class="queue-list" id="studyQueueList"></div>
+    </aside>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/study.js"></script>
+</body>
+</html>
