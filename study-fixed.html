@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Mode — MyTube</title>
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/study.css">
+</head>
+
+<body>
+<div class="study-shell" id="studyRoot">
+
+    <header class="study-topbar">
+        <a href="library.html" class="back-link">← Back</a>
+
+        <span class="playlist-title" id="topbarPlaylistTitle">
+            Loading…
+        </span>
+
+        <button class="focus-badge" id="focusModeBtn" type="button">
+            🎯 Focus Mode
+        </button>
+    </header>
+
+    <main class="study-layout">
+
+        <section class="study-main">
+
+            <div class="player">
+                <div class="youtube-player-wrapper" id="youtubePlayerWrapper">
+
+                    <div
+                        id="youtube-player"
+                        aria-label="YouTube study video">
+                    </div>
+
+                    <div
+                        class="player-error"
+                        id="playerError"
+                        hidden>
+                        <div class="player-error-icon">⚠️</div>
+                        <h2>Video unavailable</h2>
+                        <p id="playerErrorMessage">
+                            We couldn't load this video.
+                        </p>
+                        <button
+                            class="btn btn-secondary"
+                            id="retryPlayerBtn"
+                            type="button">
+                            Try Again
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <article class="video-info">
+                <h1 id="videoTitle">Loading…</h1>
+
+                <p class="meta" id="videoMeta"></p>
+
+                <div class="video-actions">
+                    <button
+                        class="btn btn-secondary btn-sm"
+                        id="markCompleteBtn"
+                        type="button">
+                        Mark as complete
+                    </button>
+                </div>
+            </article>
+
+        </section>
+
+        <aside class="study-side">
+
+            <section class="timer-card">
+
+                <div class="timer-label">Focus Session</div>
+
+                <div class="timer-ring-wrap">
+                    <svg viewBox="0 0 172 172" aria-hidden="true">
+                        <circle
+                            class="timer-ring-bg"
+                            cx="86"
+                            cy="86"
+                            r="76">
+                        </circle>
+
+                        <circle
+                            class="timer-ring-fill"
+                            id="timerRingFill"
+                            cx="86"
+                            cy="86"
+                            r="76"
+                            stroke-dasharray="477.5"
+                            stroke-dashoffset="0">
+                        </circle>
+                    </svg>
+
+                    <div class="timer-display">
+                        <div class="timer-time" id="timerTime">
+                            25:00
+                        </div>
+                        <div class="timer-sub">Stay focused</div>
+                    </div>
+                </div>
+
+                <div class="timer-presets">
+                    <button class="preset-btn" data-minutes="25" type="button">25 min</button>
+                    <button class="preset-btn" data-minutes="50" type="button">50 min</button>
+                    <button class="preset-btn" data-minutes="90" type="button">90 min</button>
+                    <button class="preset-btn" id="customPresetBtn" type="button">Custom</button>
+                </div>
+
+                <div class="timer-actions">
+                    <button
+                        class="btn btn-primary btn-block"
+                        id="timerStartBtn"
+                        type="button">
+                        Start Focus
+                    </button>
+
+                    <button
+                        class="btn btn-icon"
+                        id="timerResetBtn"
+                        type="button"
+                        aria-label="Reset timer">
+                        ↺
+                    </button>
+                </div>
+
+                <div
+                    class="timer-complete-msg"
+                    id="timerCompleteMsg"
+                    hidden>
+                    🎉 Focus session completed!
+                </div>
+
+            </section>
+
+            <section class="study-queue">
+                <div class="queue-title" id="queuePlaylistTitle">
+                    Playlist
+                </div>
+
+                <div class="queue-list" id="studyQueueList"></div>
+            </section>
+
+        </aside>
+    </main>
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+<script src="js/app.js"></script>
+<script src="js/study.js"></script>
+
+</body>
+</html>
