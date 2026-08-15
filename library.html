@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Library — MyTube</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/library.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="assets/logo.svg" alt="MyTube logo"> MyTube</div>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="dashboard.html">🏠 Home</a>
+      <a class="nav-item" href="library.html">📚 Library</a>
+      <a class="nav-item" href="study.html">🎯 Study Mode</a>
+      <a class="nav-item" href="progress.html">📊 Progress</a>
+      <div class="sidebar-divider"></div>
+      <a class="nav-item" href="settings.html">⚙️ Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>My Library</h1>
+      <p>Your focused learning content.</p>
+    </div>
+
+    <div class="library-toolbar">
+      <a href="add-content.html" class="btn btn-secondary">+ Add Playlist</a>
+      <a href="add-content.html" class="btn btn-secondary">+ Add Channel</a>
+    </div>
+
+    <div class="library-controls">
+      <div class="tabs">
+        <div class="tab active" data-filter="all">All</div>
+        <div class="tab" data-filter="playlist">Playlists</div>
+        <div class="tab" data-filter="channel">Channels</div>
+      </div>
+      <div class="search-wrap">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" class="input" id="librarySearch" placeholder="Search your library...">
+      </div>
+    </div>
+
+    <div class="content-grid" id="libraryGrid"></div>
+  </main>
+</div>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="dashboard.html">🏠<span>Home</span></a>
+  <a class="nav-item" href="library.html">📚<span>Library</span></a>
+  <a class="nav-item" href="study.html">🎯<span>Study</span></a>
+  <a class="nav-item" href="progress.html">📊<span>Progress</span></a>
+</nav>
+
+<script src="js/app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/library.js"></script>
+</body>
+</html>

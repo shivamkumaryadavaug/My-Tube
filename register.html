@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — MyTube</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="auth-shell">
+  <div class="card auth-card">
+    <div class="auth-logo"><img src="assets/logo.svg" alt="MyTube logo"> MyTube</div>
+    <h1>Create your account</h1>
+    <p class="auth-sub">Study without the distractions.</p>
+
+    <div class="auth-error" id="authError"></div>
+
+    <form id="registerForm">
+      <div class="field">
+        <label for="displayName">Name</label>
+        <input type="text" class="input" id="displayName" placeholder="Student" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" class="input" id="email" required autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" class="input" id="password" required minlength="8" autocomplete="new-password">
+      </div>
+      <div class="field">
+        <label for="confirmPassword">Confirm password</label>
+        <input type="password" class="input" id="confirmPassword" required minlength="8" autocomplete="new-password">
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="registerBtn">Create Account</button>
+    </form>
+
+    <p class="auth-switch">Already have an account? <a href="login.html">Log in</a></p>
+  </div>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>
