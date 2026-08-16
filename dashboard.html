@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home — MyTube</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="assets/logo.svg" alt="MyTube logo"> MyTube</div>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="dashboard.html">🏠 Home</a>
+      <a class="nav-item" href="library.html">📚 Library</a>
+      <a class="nav-item" href="study.html">🎯 Study Mode</a>
+      <a class="nav-item" href="progress.html">📊 Progress</a>
+      <div class="sidebar-divider"></div>
+      <a class="nav-item" href="settings.html">⚙️ Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main-content dashboard-main">
+    <header class="mobile-dashboard-header">
+      <div class="mobile-brand">
+        <img src="assets/logo.svg" alt="MyTube logo">
+        <span>My<span>Tube</span></span>
+      </div>
+      <div class="dashboard-header-actions">
+        <button class="header-icon" type="button" aria-label="Notifications">♧<span class="notification-dot"></span></button>
+        <div class="profile-avatar" aria-label="Profile">M</div>
+      </div>
+    </header>
+
+    <div class="greeting-card">
+      <div class="greeting-copy">
+        <h1 id="greetingText">Good morning 👋</h1>
+        <p>Ready to focus?</p>
+        <a href="study.html" class="btn btn-primary">Start Studying</a>
+      </div>
+    </div>
+
+    <section class="dash-section continue-section">
+      <div class="dash-section-head">
+        <h2>Continue Learning</h2>
+        <a href="library.html">View Library</a>
+      </div>
+      <div class="playlist-grid" id="continuePlaylists"></div>
+    </section>
+
+    <section class="dash-section focus-section">
+      <div class="dash-section-head"><h2>Today's Focus</h2></div>
+      <div class="stat-grid">
+        <div class="card stat-card">
+          <div class="stat-icon">◷</div>
+          <div class="stat-value"><span id="todayMinutes">0</span> min</div>
+          <div class="stat-label">Focus Time</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-icon">◎</div>
+          <div class="stat-value" id="todaySessions">0</div>
+          <div class="stat-label">Sessions</div>
+        </div>
+        <div class="card stat-card">
+          <div class="stat-icon">▷</div>
+          <div class="stat-value" id="todayVideos">0</div>
+          <div class="stat-label">Videos</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="dash-section streak-section">
+      <div class="dash-section-head"><h2>Study Streak</h2></div>
+      <div class="streak-card">
+        <div class="streak-flame">🔥</div>
+        <div>
+          <h3 id="streakValue">0 Day Streak</h3>
+          <p>Keep going!</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="dashboard.html"><span class="nav-emoji">⌂</span><span>Home</span></a>
+  <a class="nav-item" href="library.html"><span class="nav-emoji">▱</span><span>Library</span></a>
+  <a class="nav-item" href="study.html"><span class="nav-emoji">◎</span><span>Study</span></a>
+  <a class="nav-item" href="progress.html"><span class="nav-emoji">▥</span><span>Progress</span></a>
+</nav>
+
+<script src="js/app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
