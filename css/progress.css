@@ -1,0 +1,27 @@
+/* ---------- Progress ---------- */
+.progress-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:34px;}
+.progress-stat-card{text-align:center;padding:26px 14px;}
+.progress-stat-card .val{font-family:var(--font-mono);font-size:1.7rem;font-weight:700;}
+.progress-stat-card .lbl{color:var(--text-secondary);font-size:.8rem;margin-top:6px;}
+
+.chart-card{margin-bottom:34px;}
+.chart-card h2{font-size:1.1rem;font-weight:700;margin-bottom:22px;}
+.chart-bars{display:flex;align-items:flex-end;justify-content:space-between;height:170px;gap:10px;padding:0 4px;}
+.chart-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:100%;gap:8px;}
+.chart-bar-wrap{flex:1;display:flex;align-items:flex-end;width:100%;justify-content:center;}
+.chart-bar{width:60%;max-width:34px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#ff8a70,var(--accent));transition:height .7s var(--ease);position:relative;}
+.chart-bar:hover::after{content:attr(data-val);position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:.68rem;font-family:var(--font-mono);color:var(--text-secondary);white-space:nowrap;}
+.chart-day{color:var(--text-tertiary);font-size:.76rem;font-weight:600;}
+
+.course-list{display:flex;flex-direction:column;gap:18px;}
+.course-row{display:flex;flex-direction:column;gap:8px;}
+.course-row-top{display:flex;justify-content:space-between;font-size:.9rem;}
+.course-row-top .name{font-weight:600;}
+.course-row-top .pct{font-family:var(--font-mono);color:var(--text-secondary);}
+
+@media (max-width:768px){
+  .progress-stat-grid{grid-template-columns:1fr 1fr;}
+}
+@media (max-width:480px){
+  .chart-day{font-size:.62rem;}
+}
