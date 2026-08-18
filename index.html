@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111827">
+<title>MyTube — Your YouTube. Your Playlist. Your Focus.</title>
+<meta name="description" content="A distraction-free study space for students. Add the educational playlists and channels you need and focus on learning without endless recommendations.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="nav-landing">
+  <div class="brand"><img src="assets/logo.svg" alt="MyTube logo"> MyTube</div>
+  <div class="nav-landing-links">
+    <a href="#how-it-works" class="btn btn-ghost btn-sm">How it works</a>
+    <a href="register.html" class="btn btn-primary btn-sm">Start Studying</a>
+    <a href="login.html" class="btn btn-ghost btn-sm">Log In</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div>
+    <span class="hero-eyebrow"><span class="dot"></span> Built for focused learning</span>
+    <h1>Your YouTube. Your Playlist. <span>Your Focus.</span></h1>
+    <p class="lead">A distraction-free study space for students. Add the educational playlists and channels you need and focus on learning without endless recommendations.</p>
+    <div class="hero-actions">
+      <a href="register.html" class="btn btn-primary">Start Studying</a>
+      <a href="#how-it-works" class="btn btn-secondary">See How It Works</a>
+    </div>
+  </div>
+
+  <div class="mockup">
+    <div class="mockup-player">
+      <div class="mockup-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="mockup-scrub"></div>
+    </div>
+    <div class="mockup-title">Variables and Data Types in C</div>
+    <div class="mockup-row">
+      <div class="mockup-ring"><span>18:42</span></div>
+      <div class="mockup-list">
+        <div class="mockup-list-item"></div>
+        <div class="mockup-list-item"></div>
+        <div class="mockup-list-item"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-head">
+    <span class="section-label">Why MyTube</span>
+    <h2>Everything you need. Nothing you don't.</h2>
+  </div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Distraction Free</h3>
+      <p>No recommendations. No Shorts. Just your study material.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📚</div>
+      <h3>Your Library</h3>
+      <p>Keep your favorite educational playlists and channels in one place.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📈</div>
+      <h3>Track Progress</h3>
+      <p>See your study time, completed videos, and learning progress.</p>
+    </div>
+  </div>
+</section>
+
+<section class="steps" id="how-it-works">
+  <div class="section-head">
+    <span class="section-label">The process</span>
+    <h2>Three steps to focused studying</h2>
+  </div>
+  <div class="step-grid">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Add Content</h3>
+      <p>Paste a YouTube playlist or channel link and choose exactly what you want to study.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Start Studying</h3>
+      <p>Open Study Mode for a clean player, your queue, and a focus timer — nothing else.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Track Progress</h3>
+      <p>Watch your study streak, focus time, and course completion grow over time.</p>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-box">
+    <h2>Ready to focus?</h2>
+    <a href="register.html" class="btn btn-primary">Start Studying</a>
+  </div>
+</section>
+
+<footer class="landing-footer">
+  MyTube — Study without the distractions.
+</footer>
+
+<script src="js/app.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('Service worker registered:', reg.scope))
+      .catch(err => console.error('Service worker registration failed:', err));
+  }
+</script>
+
+</body>
+</html>

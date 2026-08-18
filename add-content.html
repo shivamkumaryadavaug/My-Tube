@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#111827">
+<title>Add Study Content — MyTube</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/premium-ui.css">
+</head>
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="assets/logo.svg" alt="MyTube logo"> MyTube</div>
+    <nav class="sidebar-nav">
+      <a class="nav-item" href="dashboard.html">🏠 Home</a>
+      <a class="nav-item" href="library.html">📚 Library</a>
+      <a class="nav-item" href="study.html">🎯 Study Mode</a>
+      <a class="nav-item" href="progress.html">📊 Progress</a>
+      <div class="sidebar-divider"></div>
+      <a class="nav-item" href="settings.html">⚙️ Settings</a>
+    </nav>
+  </aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Add Study Content</h1>
+      <p>Bring the exact playlists and channels you want to study — nothing more.</p>
+    </div>
+
+    <div class="add-content-grid">
+      <div class="card add-card">
+        <div class="add-icon">📚</div>
+        <h2>Add Playlist</h2>
+        <p>Add a specific YouTube playlist to your study library.</p>
+        <form id="playlistForm">
+          <input type="url" class="input" id="playlistUrl" placeholder="Paste YouTube playlist URL" required>
+          <button type="submit" class="btn btn-primary btn-block">Add Playlist</button>
+        </form>
+      </div>
+
+      <div class="card add-card">
+        <div class="add-icon">📺</div>
+        <h2>Add Channel</h2>
+        <p>Add an educational YouTube channel and choose what you want to study.</p>
+        <form id="channelForm">
+          <input type="url" class="input" id="channelUrl" placeholder="Paste YouTube channel URL" required>
+          <button type="submit" class="btn btn-primary btn-block">Add Channel</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card selection-panel" id="selectionPanel" style="display:none;">
+      <h2>Select what you want to study</h2>
+      <p class="panel-sub">From <span id="selectionChannelName">this channel</span> — pick playlists or individual videos.</p>
+
+      <div class="select-group">
+        <h4>Playlists</h4>
+        <div id="selectPlaylists"></div>
+      </div>
+      <div class="select-group">
+        <h4>Individual videos</h4>
+        <div id="selectVideos"></div>
+      </div>
+
+      <div class="selection-actions">
+        <div class="selection-actions-left">
+          <button class="btn btn-ghost btn-sm" id="selectAllBtn" type="button">Select All</button>
+          <button class="btn btn-ghost btn-sm" id="clearAllBtn" type="button">Clear All</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <span class="selected-count-label"><b id="selectedCount">0</b> selected</span>
+          <button class="btn btn-primary" id="addSelectedBtn" type="button">Add Selected</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="dashboard.html">🏠<span>Home</span></a>
+  <a class="nav-item" href="library.html">📚<span>Library</span></a>
+  <a class="nav-item" href="study.html">🎯<span>Study</span></a>
+  <a class="nav-item" href="progress.html">📊<span>Progress</span></a>
+</nav>
+
+<script src="js/app.js"></script>
+<script src="js/api.js"></script>
+<script src="js/add-content.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('Service worker registered:', reg.scope))
+      .catch(err => console.error('Service worker registration failed:', err));
+  }
+</script>
+
+</body>
+</html>
