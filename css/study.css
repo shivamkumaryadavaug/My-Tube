@@ -19,6 +19,16 @@
 
 /* Video player */
 .player{background:#000;border-radius:var(--radius-lg);overflow:hidden;position:relative;aspect-ratio:16/9;border:1px solid var(--border);}
+
+/* When the player (or its iframe) is in the Fullscreen API, fill the whole
+   screen with no rounding/border/aspect-ratio constraint so a rotated
+   device gets a true fullscreen landscape video instead of a boxed-in one. */
+.player:fullscreen,
+.player:-webkit-full-screen,
+#youtube-player iframe:fullscreen,
+#youtube-player iframe:-webkit-full-screen{
+  aspect-ratio:auto;border-radius:0;border:none;width:100vw;height:100vh;background:#000;
+}
 .player-visual{position:absolute;inset:0;background:linear-gradient(135deg,#1a1a20,#0a0a0c);display:flex;align-items:center;justify-content:center;}
 .player-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 25% 25%,rgba(255,59,48,.16),transparent 55%);}
 .player-play-btn{width:74px;height:74px;border-radius:50%;background:rgba(255,59,48,.92);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 34px rgba(255,59,48,.4);transition:transform .18s var(--ease);z-index:2;}
