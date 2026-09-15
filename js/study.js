@@ -728,13 +728,11 @@ function seekFromKeyboard(event) {
 }
 
 function fullscreenPlayer() {
-  const iframe =
-    youtubePlayer &&
-    typeof youtubePlayer.getIframe === 'function'
-      ? youtubePlayer.getIframe()
-      : document.querySelector('#youtube-player iframe');
-
-  const target = iframe?.requestFullscreen ? iframe : document.getElementById('studyPlayer');
+  // Always fullscreen the whole player container (not the bare iframe) so the
+  // video, controls, and wrapper all resize together as one unit — targeting
+  // the iframe directly leaves the surrounding wrapper divs at their old
+  // size, which is what caused the size-mismatch bar seen in fullscreen.
+  const target = document.getElementById('studyPlayer');
   if (!target?.requestFullscreen) return;
 
   target.requestFullscreen()

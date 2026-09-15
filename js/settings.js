@@ -8,18 +8,23 @@ let __isGuestSession = false;
 document.addEventListener('DOMContentLoaded', async () => {
   if(!requireAuth()) return;
 
-  wireThemePicker();
-  wireModals();
-  wireLogout();
-  wireEditName();
-  wireChangePassword();
-  wireDeleteAccount();
-  wireStudyPreferenceControls();
+  // Wire every control up front, synchronously, so a slow or failed network
+  // call (loadAccount/loadSettings) can never prevent buttons like Edit or
+  // Change Password from responding to taps.
+  try{
+    wireThemePicker();
+    wireModals();
+    wireLogout();
+    wireEditName();
+    wireChangePassword();
+    wireDeleteAccount();
+    wireStudyPreferenceControls();
+  }catch(err){
+    console.error('Settings: failed to wire controls', err);
+  }
 
-  await Promise.all([
-    loadAccount(),
-    loadSettings(),
-  ]);
+  loadAccount();
+  loadSettings();
 });
 
 /* ---------------- Theme picker ---------------- */
@@ -39,7 +44,7 @@ function wireThemePicker(){
 }
 
 /* ---------------- Account header ---------------- */
-async function loadAccount(){
+async function loadAccount(attempt = 0){
   try{
     const [me, isGuest] = await Promise.all([apiGetMe(), apiIsGuest()]);
     if(!me) return;
@@ -62,6 +67,19 @@ async function loadAccount(){
         "This permanently removes this guest session, its playlists, channels and study history. This cannot be undone.";
     }
   }catch(err){
+    // Account details are essential, not a nice-to-have — a silent toast
+    // that's easy to miss would leave the "—" placeholders forever. Retry
+    // automatically a couple of times (the free-tier backend can be slow to
+    // wake up), then fall back to a visible retry button.
+    if(attempt < 2){
+      setTimeout(() => loadAccount(attempt + 1), 2000);
+      return;
+    }
+    document.getElementById('accountName').textContent = 'Could not load account';
+    document.getElementById('accountEmail').innerHTML =
+      '<button type="button" class="btn btn-ghost btn-sm" id="retryAccountBtn" style="padding:4px 10px;">Tap to retry</button>';
+    const retryBtn = document.getElementById('retryAccountBtn');
+    if(retryBtn) retryBtn.addEventListener('click', () => loadAccount(0));
     showToast(err.message || 'Could not load account details', 'warning');
   }
 }
