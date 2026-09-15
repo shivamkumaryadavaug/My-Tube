@@ -20,13 +20,11 @@
 /* Video player */
 .player{background:#000;border-radius:var(--radius-lg);overflow:hidden;position:relative;aspect-ratio:16/9;border:1px solid var(--border);}
 
-/* When the player (or its iframe) is in the Fullscreen API, fill the whole
+/* When the player container is in the Fullscreen API, fill the whole
    screen with no rounding/border/aspect-ratio constraint so a rotated
    device gets a true fullscreen landscape video instead of a boxed-in one. */
 .player:fullscreen,
-.player:-webkit-full-screen,
-#youtube-player iframe:fullscreen,
-#youtube-player iframe:-webkit-full-screen{
+.player:-webkit-full-screen{
   aspect-ratio:auto;border-radius:0;border:none;width:100vw;height:100vh;background:#000;
 }
 .player-visual{position:absolute;inset:0;background:linear-gradient(135deg,#1a1a20,#0a0a0c);display:flex;align-items:center;justify-content:center;}
