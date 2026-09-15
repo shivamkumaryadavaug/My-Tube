@@ -13,8 +13,8 @@
 <meta name="color-scheme" content="dark">
 <title>Study Mode — MyTube</title>
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/study.css">
+<link rel="stylesheet" href="css/style.css?v=20250915b">
+<link rel="stylesheet" href="css/study.css?v=20250915b">
 
 <style>
   /* Study player overrides: the old mock-player UI is replaced by YouTube IFrame Player. */
@@ -144,14 +144,24 @@
     }
   }
 </style>
-  <link rel="stylesheet" href="css/premium-ui.css">
+  <link rel="stylesheet" href="css/premium-ui.css?v=20250915b">
 </head>
 
 <body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="assets/logo.svg" alt="MyTube logo"> MyTube</div>
+    <nav class="sidebar-nav" data-app-sidebar-nav></nav>
+  </aside>
+
 <div class="study-shell" id="studyRoot">
 
   <div class="study-topbar">
-    <a href="library.html" class="back-link">← Back</a>
+    <a href="library.html" class="back-link" aria-label="Back to Library">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <span>Back</span>
+    </a>
     <span class="playlist-title" id="topbarPlaylistTitle">Loading…</span>
     <button class="focus-badge" id="focusModeBtn" type="button">🎯 Focus Mode</button>
   </div>
@@ -274,12 +284,16 @@
   </div>
 </div>
 
-<script src="js/app.js"></script>
-<script src="js/api.js"></script>
+</div>
+
+<nav class="bottom-nav" data-app-bottom-nav></nav>
+
+<script src="js/app.js?v=20250915b"></script>
+<script src="js/api.js?v=20250915b"></script>
 
 <!-- Official YouTube IFrame Player API. No API key is required for the IFrame player. -->
 <script src="https://www.youtube.com/iframe_api"></script>
-<script src="js/study.js"></script>
+<script src="js/study.js?v=20250915b"></script>
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')

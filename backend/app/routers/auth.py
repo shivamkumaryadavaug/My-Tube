@@ -13,6 +13,12 @@ from ..deps import get_current_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
+GUEST_EMAIL_SUFFIX = "@guest.mytube.local"
+
+
+def _is_guest(user: models.User) -> bool:
+    return user.email.endswith(GUEST_EMAIL_SUFFIX)
+
 
 def _create_settings_and_token(db: Session, user: models.User) -> schemas.Token:
     if user.settings is None:
@@ -76,3 +82,64 @@ def guest_login(db: Session = Depends(get_db)):
 @router.get("/me", response_model=schemas.UserOut)
 def me(current_user: models.User = Depends(get_current_user)):
     return current_user
+
+
+@router.get("/me/is-guest")
+def is_guest(current_user: models.User = Depends(get_current_user)):
+    """Lets the frontend tailor account-management UI for guest sessions
+    (e.g. hide 'current password' since guests never set one)."""
+    return {"is_guest": _is_guest(current_user)}
+
+
+@router.put("/me", response_model=schemas.UserOut)
+def update_profile(
+    payload: schemas.ProfileUpdate,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    name = payload.display_name.strip()
+    if not name:
+        raise HTTPException(status_code=400, detail="Display name cannot be empty.")
+    if len(name) > 120:
+        raise HTTPException(status_code=400, detail="Display name is too long.")
+
+    current_user.display_name = name
+    db.commit()
+    db.refresh(current_user)
+    return current_user
+
+
+@router.put("/me/password")
+def change_password(
+    payload: schemas.PasswordChange,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    if len(payload.new_password) < 8:
+        raise HTTPException(status_code=400, detail="New password must be at least 8 characters.")
+
+    # Guest accounts have a random password the user never saw, so there's
+    # nothing meaningful to verify — anyone already holding a valid guest
+    # session token is treated as authorized to set a real password.
+    if not _is_guest(current_user):
+        if not auth_utils.verify_password(payload.current_password, current_user.hashed_password):
+            raise HTTPException(status_code=400, detail="Current password is incorrect.")
+
+    current_user.hashed_password = auth_utils.hash_password(payload.new_password)
+    db.commit()
+    return {"status": "ok"}
+
+
+@router.delete("/me", status_code=204)
+def delete_account(
+    payload: schemas.AccountDelete,
+    current_user: models.User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    # Same reasoning as change_password: guests have no known password to check.
+    if not _is_guest(current_user):
+        if not auth_utils.verify_password(payload.password, current_user.hashed_password):
+            raise HTTPException(status_code=400, detail="Password is incorrect.")
+
+    db.delete(current_user)
+    db.commit()

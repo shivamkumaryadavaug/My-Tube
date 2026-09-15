@@ -68,3 +68,8 @@ The only things still in `localStorage` are the JWT (`mytube_token`) and a cache
 1. In `js/api.js`, set `API_BASE` to your deployed backend's URL.
 2. Deploy the backend (see its README — Render/Railway both have free tiers) with a real `YOUTUBE_API_KEY`, `SECRET_KEY`, and `CORS_ORIGINS` set to wherever you host this frontend.
 3. Deploy this folder as a static site (Netlify, Vercel, GitHub Pages, or a static site on Render all work — no build step needed).
+
+
+
+
+<!-- trigger deploy -->
