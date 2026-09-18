@@ -231,6 +231,19 @@ h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:-.02em;line-height:1.
 .input:focus,.select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
 .input::placeholder{color:var(--text-tertiary);}
 
+/* Neutralize Chrome/Safari's forced autofill background so autofilled
+   fields (very common on the login form) keep matching our theme colors
+   instead of the browser's default gray/yellow box with hard-to-read text. */
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.input:-webkit-autofill:active{
+  -webkit-text-fill-color:var(--text-primary);
+  caret-color:var(--text-primary);
+  transition:background-color 9999s ease-in-out 0s;
+  box-shadow:0 0 0 1000px var(--bg-secondary) inset;
+}
+
 /* ---------- Selection rows (add-content / channel) ---------- */
 .add-content-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:10px;}
 .add-card{padding:32px;}
