@@ -119,25 +119,12 @@
   .stat-icon{font-size:1.55rem;margin-bottom:10px;}
   .stat-card .stat-value{font-size:1.25rem;}
   .stat-card .stat-label{font-size:.72rem;}
-  .streak-section{display:none;}
-  .bottom-nav{
-    display:flex;
-    height:auto;
-    min-height:var(--bottomnav-h);
-    padding:7px 5px calc(env(safe-area-inset-bottom) + 7px);
-    border-top:1px solid rgba(255,255,255,.08);
-    background:rgba(17,17,20,.92);
-  }
-  .bottom-nav .nav-item{
-    gap:3px;font-size:.7rem;padding:5px 8px;min-width:0;
-  }
-  .bottom-nav .nav-emoji{
-    display:flex;align-items:center;justify-content:center;
-    width:25px;height:25px;font-size:1.55rem;line-height:1;
-    font-family:Arial,sans-serif;
-  }
-}
 
-@media (min-width:641px){
-  .bottom-nav{display:none !important;}
+  /* Keep the streak visible on mobile as a slim horizontal card instead of
+     hiding a real feature that's shown in every other screenshot. */
+  .streak-section{display:block;margin-bottom:26px;}
+  .streak-card{padding:16px 18px;border-radius:18px;gap:14px;}
+  .streak-flame{font-size:1.7rem;}
+  .streak-card h3{font-size:1.02rem;}
+  .streak-card p{font-size:.8rem;}
 }

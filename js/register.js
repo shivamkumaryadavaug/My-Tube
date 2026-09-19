@@ -4,14 +4,30 @@
 
 function showAuthError(message){
   const el = document.getElementById('authError');
-  el.textContent = message;
+  const textEl = document.getElementById('authErrorText');
+  if(textEl) textEl.textContent = message; else el.textContent = message;
   el.classList.add('show');
 }
 function hideAuthError(){
   document.getElementById('authError').classList.remove('show');
 }
 
+function wirePasswordToggle(inputId, btnId){
+  const input = document.getElementById(inputId);
+  const btn = document.getElementById(btnId);
+  if(!input || !btn) return;
+  btn.addEventListener('click', ()=>{
+    const showing = input.type === 'text';
+    input.type = showing ? 'password' : 'text';
+    btn.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+    btn.classList.toggle('active', !showing);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', ()=>{
+  wirePasswordToggle('password', 'togglePassword');
+  wirePasswordToggle('confirmPassword', 'toggleConfirmPassword');
+
   if(isLoggedIn()){
     window.location.href = 'dashboard.html';
     return;

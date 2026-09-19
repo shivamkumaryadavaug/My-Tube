@@ -10,7 +10,7 @@ function setToken(token){ localStorage.setItem(TOKEN_KEY, token); }
 function clearToken(){ localStorage.removeItem(TOKEN_KEY); }
 function isLoggedIn(){ return !!getToken(); }
 
-async function api(path, options = {}){
+async function api(path, options = {}, _retryCount = 0){
   const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
   const token = getToken();
   if(token) headers['Authorization'] = `Bearer ${token}`;
@@ -19,13 +19,40 @@ async function api(path, options = {}){
   try{
     res = await fetch(`${API_BASE}${path}`, { ...options, headers });
   }catch(err){
-    throw new Error('Could not reach the server. Is the backend running?');
+    // A network failure (e.g. the free-tier backend is cold-starting and
+    // hasn't woken up yet) is not proof the session is invalid. Retry a
+    // couple of times with a short backoff before giving up, since Render's
+    // free tier can take up to ~60s to wake from sleep.
+    if(_retryCount < 2){
+      await new Promise(r => setTimeout(r, 1500 * (_retryCount + 1)));
+      return api(path, options, _retryCount + 1);
+    }
+    throw new Error('Could not reach the server. It may be waking up — please try again in a few seconds.');
   }
 
   if(res.status === 401){
-    clearToken();
-    window.location.href = 'login.html';
-    return null;
+    // Only trust a clean, fully-formed 401 from the API itself as a real
+    // "your session is invalid" signal. Distinguish that from Render's
+    // proxy/cold-start responses, which usually aren't valid JSON.
+    let isRealAuthError = false;
+    try{
+      const body = await res.clone().json();
+      isRealAuthError = typeof body === 'object' && body !== null;
+    }catch(e){
+      isRealAuthError = false;
+    }
+
+    if(isRealAuthError){
+      clearToken();
+      window.location.href = 'login.html';
+      return null;
+    }
+
+    if(_retryCount < 2){
+      await new Promise(r => setTimeout(r, 1500 * (_retryCount + 1)));
+      return api(path, options, _retryCount + 1);
+    }
+    throw new Error('The server is still starting up — please try again in a few seconds.');
   }
 
   if(!res.ok){
@@ -82,6 +109,48 @@ function requireAuth(){
     return false;
   }
   return true;
+}
+
+/* ---------------- Account management ---------------- */
+async function apiIsGuest(){
+  const data = await api('/auth/me/is-guest');
+  return !!(data && data.is_guest);
+}
+
+async function apiUpdateProfile(displayName){
+  return api('/auth/me', {
+    method: 'PUT',
+    body: JSON.stringify({ display_name: displayName }),
+  });
+}
+
+async function apiChangePassword(currentPassword, newPassword){
+  return api('/auth/me/password', {
+    method: 'PUT',
+    body: JSON.stringify({ current_password: currentPassword, new_password: newPassword }),
+  });
+}
+
+async function apiDeleteAccount(password){
+  return api('/auth/me', {
+    method: 'DELETE',
+    body: JSON.stringify({ password: password || '' }),
+  });
+}
+
+async function apiGetMe(){
+  return api('/auth/me');
+}
+
+async function apiGetSettings(){
+  return api('/settings');
+}
+
+async function apiUpdateSettings(partial){
+  return api('/settings', {
+    method: 'PUT',
+    body: JSON.stringify(partial),
+  });
 }
 
 function formatDuration(totalSeconds){
