@@ -9,9 +9,18 @@ function greetingForNow(){
   return 'Good evening';
 }
 
-function renderGreeting(){
+async function renderGreeting(){
   const el = document.getElementById('greetingText');
-  if(el) el.textContent = `${greetingForNow()} 👋`;
+  if(!el) return;
+  el.textContent = `${greetingForNow()} 👋`;
+  try{
+    const me = await apiGetMe();
+    if(me && me.display_name){
+      el.textContent = `${greetingForNow()}, ${me.display_name} 👋`;
+    }
+  }catch(err){
+    // Keep the time-based greeting if we can't fetch the user (e.g. offline).
+  }
 }
 
 async function renderContinueLearning(){

@@ -13,22 +13,15 @@
 <meta name="color-scheme" content="dark">
 <title>Settings — MyTube</title>
 <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/premium-ui.css">
+<link rel="stylesheet" href="css/style.css?v=20250919b">
+<link rel="stylesheet" href="css/premium-ui.css?v=20250919b">
 </head>
 <body>
 <div class="app-shell">
 
   <aside class="sidebar">
     <div class="sidebar-logo"><img src="assets/logo.svg" alt="MyTube logo"> MyTube</div>
-    <nav class="sidebar-nav">
-      <a class="nav-item" href="dashboard.html">🏠 Home</a>
-      <a class="nav-item" href="library.html">📚 Library</a>
-      <a class="nav-item" href="study.html">🎯 Study Mode</a>
-      <a class="nav-item" href="progress.html">📊 Progress</a>
-      <div class="sidebar-divider"></div>
-      <a class="nav-item" href="settings.html">⚙️ Settings</a>
-    </nav>
+    <nav class="sidebar-nav" data-app-sidebar-nav></nav>
   </aside>
 
   <main class="main-content" style="max-width:640px;">
@@ -39,15 +32,68 @@
 
     <section class="card settings-section">
       <h2>Account</h2>
-      <div class="settings-row">
-        <div><div class="settings-row-label" id="accountName">—</div><div class="settings-row-sub">Signed in</div></div>
+      <div class="account-header">
+        <div class="account-avatar" id="accountAvatar">—</div>
+        <div class="account-header-info">
+          <div class="account-header-name" id="accountName">—</div>
+          <div class="account-header-email" id="accountEmail">—</div>
+          <span class="account-guest-badge hidden" id="guestBadge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:11px;height:11px;"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+            Guest session
+          </span>
+        </div>
       </div>
       <div class="settings-row">
-        <div><div class="settings-row-label">Email</div><div class="settings-row-sub" id="accountEmail">—</div></div>
+        <div><div class="settings-row-label">Display name</div><div class="settings-row-sub">Shown across MyTube</div></div>
+        <button class="btn btn-ghost btn-sm" type="button" id="editNameBtn">Edit</button>
+      </div>
+      <div class="settings-row" id="passwordRow">
+        <div><div class="settings-row-label">Password</div><div class="settings-row-sub">Change your account password</div></div>
+        <button class="btn btn-ghost btn-sm" type="button" id="changePasswordBtn">Change</button>
       </div>
       <div class="settings-row">
         <div class="settings-row-label">Logout</div>
         <button class="btn btn-ghost btn-sm" type="button" id="logoutBtn">Logout</button>
+      </div>
+    </section>
+
+    <section class="card settings-section">
+      <h2>Appearance</h2>
+      <p class="settings-row-sub" style="margin-bottom:16px;">Choose how MyTube looks on this device.</p>
+      <div class="theme-picker" id="themePicker">
+        <div class="theme-picker-card" data-theme-option="dark">
+          <div class="theme-picker-preview tp-dark">
+            <div class="tp-bar accent w1"></div>
+            <div class="tp-bar w2"></div>
+            <div class="tp-bar w1"></div>
+          </div>
+          <div class="theme-picker-label">
+            <span>Dark</span>
+            <span class="theme-picker-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          </div>
+        </div>
+        <div class="theme-picker-card" data-theme-option="light">
+          <div class="theme-picker-preview tp-light">
+            <div class="tp-bar accent w1"></div>
+            <div class="tp-bar w2"></div>
+            <div class="tp-bar w1"></div>
+          </div>
+          <div class="theme-picker-label">
+            <span>Light</span>
+            <span class="theme-picker-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          </div>
+        </div>
+        <div class="theme-picker-card" data-theme-option="system">
+          <div class="theme-picker-preview tp-system">
+            <div class="tp-bar accent w1"></div>
+            <div class="tp-bar w2"></div>
+            <div class="tp-bar w1"></div>
+          </div>
+          <div class="theme-picker-label">
+            <span>System</span>
+            <span class="theme-picker-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -73,18 +119,6 @@
     </section>
 
     <section class="card settings-section">
-      <h2>Appearance</h2>
-      <div class="settings-row">
-        <div class="settings-row-label">Theme</div>
-        <div class="theme-switcher" id="themeSwitcher">
-          <div class="theme-option" data-theme-option="dark">Dark</div>
-          <div class="theme-option" data-theme-option="light">Light</div>
-          <div class="theme-option" data-theme-option="system">System</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="card settings-section">
       <h2>Notifications</h2>
       <div class="settings-row">
         <div><div class="settings-row-label">Study reminders</div><div class="settings-row-sub">Nudge me to keep my streak going</div></div>
@@ -102,100 +136,90 @@
       <div class="settings-row"><div class="settings-row-label">Privacy</div><a href="#" class="btn btn-ghost btn-sm">View</a></div>
       <div class="settings-row"><div class="settings-row-label">Terms</div><a href="#" class="btn btn-ghost btn-sm">View</a></div>
     </section>
+
+    <section class="card settings-section danger-zone">
+      <h2>Danger Zone</h2>
+      <div class="settings-row">
+        <div><div class="settings-row-label">Delete account</div><div class="settings-row-sub">Permanently remove your account and all study data</div></div>
+        <button class="btn btn-danger btn-sm" type="button" id="deleteAccountBtn">Delete</button>
+      </div>
+    </section>
   </main>
 </div>
 
-<nav class="bottom-nav">
-  <a class="nav-item" href="dashboard.html">🏠<span>Home</span></a>
-  <a class="nav-item" href="library.html">📚<span>Library</span></a>
-  <a class="nav-item" href="study.html">🎯<span>Study</span></a>
-  <a class="nav-item" href="progress.html">📊<span>Progress</span></a>
-</nav>
+<nav class="bottom-nav" data-app-bottom-nav></nav>
 
-<script src="js/app.js"></script>
-<script src="js/api.js"></script>
-<script>
-  async function loadAccount(){
-    try{
-      const me = await api('/auth/me');
-      document.getElementById('accountName').textContent = me.display_name;
-      document.getElementById('accountEmail').textContent = me.email;
-    }catch(err){
-      showToast(err.message, 'warning');
-    }
-  }
+<!-- Edit display name modal -->
+<div class="modal-overlay" id="editNameModal">
+  <div class="modal-card">
+    <button class="modal-close" type="button" data-close-modal="editNameModal" aria-label="Close">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <h3>Edit display name</h3>
+    <p class="modal-sub">This is the name shown across MyTube.</p>
+    <form id="editNameForm">
+      <div class="field">
+        <label for="editNameInput">Display name</label>
+        <input type="text" class="input" id="editNameInput" maxlength="120" required>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="editNameModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="editNameSaveBtn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-  async function loadSettingsUI(){
-    try{
-      const settings = await api('/settings');
-      document.getElementById('focusDurationSelect').value = settings.focus_duration;
-      document.getElementById('autoplayToggle').checked = settings.autoplay;
-      document.getElementById('rememberToggle').checked = settings.remember_position;
-      document.getElementById('studyRemindersToggle').checked = settings.study_reminders;
-      document.getElementById('streakRemindersToggle').checked = settings.streak_reminders;
+<!-- Change password modal -->
+<div class="modal-overlay" id="changePasswordModal">
+  <div class="modal-card">
+    <button class="modal-close" type="button" data-close-modal="changePasswordModal" aria-label="Close">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <h3>Change password</h3>
+    <p class="modal-sub" id="changePasswordSub">Enter your current password and choose a new one.</p>
+    <form id="changePasswordForm">
+      <div class="field" id="currentPasswordField">
+        <label for="currentPasswordInput">Current password</label>
+        <input type="password" class="input" id="currentPasswordInput" autocomplete="current-password">
+      </div>
+      <div class="field">
+        <label for="newPasswordInput">New password</label>
+        <input type="password" class="input" id="newPasswordInput" minlength="8" required autocomplete="new-password">
+        <div class="field-hint">At least 8 characters.</div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="changePasswordModal">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="changePasswordSaveBtn">Update Password</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-      // The server is the source of truth for theme too — sync it locally so it
-      // paints instantly on future page loads without waiting on a request.
-      if(settings.theme){
-        setTheme(settings.theme);
-      }
-    }catch(err){
-      showToast(err.message, 'warning');
-    }
+<!-- Delete account modal -->
+<div class="modal-overlay" id="deleteAccountModal">
+  <div class="modal-card">
+    <button class="modal-close" type="button" data-close-modal="deleteAccountModal" aria-label="Close">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <h3>Delete your account?</h3>
+    <p class="modal-sub" id="deleteAccountSub">This permanently removes your account, playlists, channels and study history. This cannot be undone.</p>
+    <form id="deleteAccountForm">
+      <div class="field" id="deletePasswordField">
+        <label for="deletePasswordInput">Confirm your password</label>
+        <input type="password" class="input" id="deletePasswordInput" autocomplete="current-password">
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="deleteAccountModal">Cancel</button>
+        <button type="submit" class="btn btn-danger" id="deleteAccountSaveBtn">Delete Account</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-    const currentTheme = getData(STORAGE_KEYS.THEME, 'dark');
-    document.querySelectorAll('.theme-option').forEach(opt=>{
-      opt.classList.toggle('active', opt.dataset.themeOption === currentTheme);
-    });
-  }
-
-  async function saveSettingsFromUI(){
-    try{
-      await api('/settings', {
-        method: 'PUT',
-        body: JSON.stringify({
-          focus_duration: parseInt(document.getElementById('focusDurationSelect').value, 10),
-          autoplay: document.getElementById('autoplayToggle').checked,
-          remember_position: document.getElementById('rememberToggle').checked,
-          study_reminders: document.getElementById('studyRemindersToggle').checked,
-          streak_reminders: document.getElementById('streakRemindersToggle').checked,
-        }),
-      });
-      showToast('Settings saved');
-    }catch(err){
-      showToast(err.message, 'warning');
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', ()=>{
-    if(!requireAuth()) return;
-
-    loadAccount();
-    loadSettingsUI();
-
-    document.getElementById('focusDurationSelect').addEventListener('change', saveSettingsFromUI);
-    document.getElementById('autoplayToggle').addEventListener('change', saveSettingsFromUI);
-    document.getElementById('rememberToggle').addEventListener('change', saveSettingsFromUI);
-    document.getElementById('studyRemindersToggle').addEventListener('change', saveSettingsFromUI);
-    document.getElementById('streakRemindersToggle').addEventListener('change', saveSettingsFromUI);
-
-    document.getElementById('logoutBtn').addEventListener('click', apiLogout);
-
-    document.querySelectorAll('.theme-option').forEach(opt=>{
-      opt.addEventListener('click', async ()=>{
-        document.querySelectorAll('.theme-option').forEach(o=>o.classList.remove('active'));
-        opt.classList.add('active');
-        setTheme(opt.dataset.themeOption);
-        try{
-          await api('/settings', { method: 'PUT', body: JSON.stringify({ theme: opt.dataset.themeOption }) });
-          showToast('Theme updated');
-        }catch(err){
-          showToast(err.message, 'warning');
-        }
-      });
-    });
-  });
-</script>
+<script src="js/app.js?v=20250919b"></script>
+<script src="js/api.js?v=20250919b"></script>
+<script src="js/settings.js?v=20250919b"></script>
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')

@@ -32,6 +32,19 @@ class Token(BaseModel):
     token_type: str = "bearer"
 
 
+class ProfileUpdate(BaseModel):
+    display_name: str
+
+
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str
+
+
+class AccountDelete(BaseModel):
+    password: str
+
+
 # ---------------- Settings ----------------
 class SettingsOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -131,6 +144,7 @@ class ChannelAddContentRequest(BaseModel):
 class ChannelOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
+    youtube_channel_id: Optional[str] = None
     name: str
     description: str
     thumbnail_url: str

@@ -91,7 +91,12 @@ def today_stats(current_user: models.User = Depends(get_current_user), db: Sessi
 
 @router.get("/weekly", response_model=List[schemas.WeeklyPoint])
 def weekly(current_user: models.User = Depends(get_current_user), db: Session = Depends(get_db)):
-    since = datetime.utcnow() - timedelta(days=7)
+    today = datetime.utcnow().date()
+    # Build the actual rolling 7-day window ending today, oldest first, so the
+    # chart's day labels line up with the data instead of a fixed Mon-Sun bucket.
+    ordered_days = [today - timedelta(days=offset) for offset in range(6, -1, -1)]
+    since = datetime.combine(ordered_days[0], datetime.min.time())
+
     sessions = (
         db.query(models.FocusSession)
         .filter(models.FocusSession.user_id == current_user.id, models.FocusSession.created_at >= since)
@@ -99,8 +104,12 @@ def weekly(current_user: models.User = Depends(get_current_user), db: Session = 
     )
     totals = defaultdict(int)
     for s in sessions:
-        totals[WEEKDAYS[s.created_at.weekday()]] += s.minutes
-    return [schemas.WeeklyPoint(day=d, minutes=totals.get(d, 0)) for d in WEEKDAYS]
+        totals[s.created_at.date()] += s.minutes
+
+    return [
+        schemas.WeeklyPoint(day=WEEKDAYS[d.weekday()], minutes=totals.get(d, 0))
+        for d in ordered_days
+    ]
 
 
 @router.get("/courses", response_model=List[schemas.CourseProgress])

@@ -480,10 +480,12 @@ function handleYouTubeStateChange(event) {
   if (event.data === YT.PlayerState.PLAYING) {
     setPlayerStatus('Playing');
     setCenterPlayVisible(false);
+    showYoutubeLoading(false);
     startPlaybackTracking();
   } else if (event.data === YT.PlayerState.PAUSED) {
     setPlayerStatus('Paused');
     setCenterPlayVisible(true);
+    showYoutubeLoading(false);
     stopPlaybackTracking();
     updatePlayerProgress();
   } else if (event.data === YT.PlayerState.ENDED) {
@@ -509,6 +511,7 @@ function handleYouTubeStateChange(event) {
   } else if (event.data === YT.PlayerState.CUED) {
     setPlayerStatus('Ready');
     setCenterPlayVisible(true);
+    showYoutubeLoading(false);
   }
 }
 
@@ -555,7 +558,7 @@ function loadYouTubeVideo(youtubeId, startSeconds = 0) {
 
   currentYoutubeVideoId = youtubeId;
   hideYoutubeError();
-  showYoutubeLoading(false);
+  showYoutubeLoading(true);
   stopPlaybackTracking();
 
   try {
@@ -725,20 +728,34 @@ function seekFromKeyboard(event) {
 }
 
 function fullscreenPlayer() {
-  const iframe =
-    youtubePlayer &&
-    typeof youtubePlayer.getIframe === 'function'
-      ? youtubePlayer.getIframe()
-      : document.querySelector('#youtube-player iframe');
+  // Always fullscreen the whole player container (not the bare iframe) so the
+  // video, controls, and wrapper all resize together as one unit — targeting
+  // the iframe directly leaves the surrounding wrapper divs at their old
+  // size, which is what caused the size-mismatch bar seen in fullscreen.
+  const target = document.getElementById('studyPlayer');
+  if (!target?.requestFullscreen) return;
 
-  if (iframe?.requestFullscreen) {
-    iframe.requestFullscreen().catch(() => {});
-    return;
+  target.requestFullscreen()
+    .then(() => lockLandscapeOrientation())
+    .catch(() => {});
+}
+
+/** Best-effort landscape lock once in fullscreen. Not all browsers support
+ *  the Screen Orientation API (notably iOS Safari), so this fails silently —
+ *  those browsers still let the person rotate their physical device and the
+ *  fullscreen video will follow, since we no longer block that with CSS. */
+function lockLandscapeOrientation() {
+  const orientation = screen.orientation;
+  if (orientation && typeof orientation.lock === 'function') {
+    orientation.lock('landscape').catch(() => {});
   }
+}
 
-  const player = document.getElementById('studyPlayer');
-  if (player?.requestFullscreen) {
-    player.requestFullscreen().catch(() => {});
+function unlockOrientationOnExitFullscreen() {
+  if (document.fullscreenElement) return;
+  const orientation = screen.orientation;
+  if (orientation && typeof orientation.unlock === 'function') {
+    try { orientation.unlock(); } catch (e) { /* no-op */ }
   }
 }
 
@@ -766,6 +783,8 @@ function wirePlayerControls() {
   document
     .getElementById('fullscreenBtn')
     .addEventListener('click', fullscreenPlayer);
+
+  document.addEventListener('fullscreenchange', unlockOrientationOnExitFullscreen);
 
   document
     .getElementById('playerScrub')
