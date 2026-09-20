@@ -217,6 +217,7 @@ h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:-.02em;line-height:1.
 
 /* ---------- Cards ---------- */
 .card{
+  display:block;
   background:var(--bg-card);
   border:1px solid var(--border);
   border-radius:22px;

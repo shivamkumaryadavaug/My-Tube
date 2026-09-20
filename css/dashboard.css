@@ -54,7 +54,7 @@
 .dash-section-head a{color:var(--accent-hover);font-size:.92rem;font-weight:650;}
 
 .playlist-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
-.playlist-card{cursor:pointer;}
+.playlist-card{cursor:pointer;width:100%;}
 .playlist-thumb{
   height:120px;border-radius:var(--radius-sm);margin-bottom:14px;position:relative;overflow:hidden;
   display:flex;align-items:flex-end;padding:10px;
