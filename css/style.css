@@ -93,6 +93,12 @@ h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:-.02em;line-height:1.
 @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 @keyframes scaleIn{from{opacity:0;transform:scale(.96);}to{opacity:1;transform:scale(1);}}
 @keyframes slideUpFade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+/* Cards that clip their own content (overflow:hidden + border-radius) with a
+   blurred child badge are prone to a Chrome-for-Android compositor bug where
+   animating transform on the clipping element itself leaves a stale white
+   tile at the edge after the animation ends. Fade them in with opacity only
+   — no transform — to sidestep that GPU rasterization issue entirely. */
+@keyframes fadeInOnly{from{opacity:0;}to{opacity:1;}}
 
 .page-enter{animation:pageFadeUp .5s var(--ease) both;}
 
@@ -102,7 +108,7 @@ h1,h2,h3,h4{font-family:var(--font-display);letter-spacing:-.02em;line-height:1.
 .page-enter .content-card,
 .page-enter .playlist-card,
 .page-enter .stat-card,
-.page-enter .progress-stat-card{animation:slideUpFade .5s var(--ease) both;}
+.page-enter .progress-stat-card{animation:fadeInOnly .5s var(--ease) both;}
 .page-enter .content-grid > *:nth-child(1),.page-enter .playlist-grid > *:nth-child(1),.page-enter .stat-grid > *:nth-child(1){animation-delay:.03s;}
 .page-enter .content-grid > *:nth-child(2),.page-enter .playlist-grid > *:nth-child(2),.page-enter .stat-grid > *:nth-child(2){animation-delay:.07s;}
 .page-enter .content-grid > *:nth-child(3),.page-enter .playlist-grid > *:nth-child(3),.page-enter .stat-grid > *:nth-child(3){animation-delay:.11s;}

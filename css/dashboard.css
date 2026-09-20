@@ -58,6 +58,7 @@
 .playlist-thumb{
   height:120px;border-radius:var(--radius-sm);margin-bottom:14px;position:relative;overflow:hidden;
   display:flex;align-items:flex-end;padding:10px;
+  isolation:isolate;
 }
 .playlist-thumb .count-badge{background:rgba(0,0,0,.55);color:#fff;font-size:.72rem;font-weight:600;padding:3px 9px;border-radius:var(--radius-full);backdrop-filter:blur(4px);}
 .playlist-card h3{font-size:1rem;font-weight:700;margin-bottom:4px;}
