@@ -54,6 +54,9 @@ jobs:
       - name: Copy custom app icon and splash screen into the Android project
         run: |
           rm -f android/app/src/main/res/values/ic_launcher_background.xml
+          rm -f android/app/src/main/res/drawable*/splash.png
+          rm -f android/app/src/main/res/drawable-land-*/splash.png
+          rm -f android/app/src/main/res/drawable-port-*/splash.png
           cp -rf android-res/* android/app/src/main/res/
 
       - name: Sync web assets into the Android project
