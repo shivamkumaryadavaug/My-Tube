@@ -52,7 +52,9 @@ jobs:
         run: npx cap add android
 
       - name: Copy custom app icon and splash screen into the Android project
-        run: cp -rf android-res/* android/app/src/main/res/
+        run: |
+          rm -f android/app/src/main/res/values/ic_launcher_background.xml
+          cp -rf android-res/* android/app/src/main/res/
 
       - name: Sync web assets into the Android project
         run: npx cap sync android
