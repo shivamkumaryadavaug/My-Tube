@@ -10,6 +10,26 @@ function setToken(token){ localStorage.setItem(TOKEN_KEY, token); }
 function clearToken(){ localStorage.removeItem(TOKEN_KEY); }
 function isLoggedIn(){ return !!getToken(); }
 
+/** FastAPI/Pydantic error bodies come in two shapes: `detail` is a plain
+ *  string for hand-raised HTTPExceptions, but an ARRAY of validation-error
+ *  objects (e.g. {loc, msg, type}) for a 422 the framework generated itself.
+ *  Passing that array straight into `new Error(...)` stringifies to
+ *  "[object Object]" — this turns either shape into one readable string. */
+function extractErrorDetail(body, fallback){
+  const detail = body && body.detail;
+  if(typeof detail === 'string' && detail) return detail;
+  if(Array.isArray(detail) && detail.length){
+    return detail
+      .map(e => {
+        const field = Array.isArray(e.loc) ? e.loc[e.loc.length - 1] : null;
+        return field && typeof field === 'string' ? `${field}: ${e.msg}` : e.msg;
+      })
+      .filter(Boolean)
+      .join('; ') || fallback;
+  }
+  return fallback;
+}
+
 async function api(path, options = {}, _retryCount = 0){
   const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
   const token = getToken();
@@ -23,8 +43,13 @@ async function api(path, options = {}, _retryCount = 0){
     // hasn't woken up yet) is not proof the session is invalid. Retry a
     // couple of times with a short backoff before giving up, since Render's
     // free tier can take up to ~60s to wake from sleep.
-    if(_retryCount < 2){
-      await new Promise(r => setTimeout(r, 1500 * (_retryCount + 1)));
+    if(_retryCount < 3){
+      // Render's free tier can take up to ~60s to wake from sleep — a short
+      // fixed backoff (previously 1.5s/3s, ~4.5s total) gives up long before
+      // that. Backing off 3s/8s/20s (~31s total) covers a real cold start
+      // without making a fast failure (e.g. no internet) feel sluggish.
+      const delays = [3000, 8000, 20000];
+      await new Promise(r => setTimeout(r, delays[_retryCount]));
       return api(path, options, _retryCount + 1);
     }
     throw new Error('Could not reach the server. It may be waking up — please try again in a few seconds.');
@@ -48,8 +73,9 @@ async function api(path, options = {}, _retryCount = 0){
       return null;
     }
 
-    if(_retryCount < 2){
-      await new Promise(r => setTimeout(r, 1500 * (_retryCount + 1)));
+    if(_retryCount < 3){
+      const delays = [3000, 8000, 20000];
+      await new Promise(r => setTimeout(r, delays[_retryCount]));
       return api(path, options, _retryCount + 1);
     }
     throw new Error('The server is still starting up — please try again in a few seconds.');
@@ -57,7 +83,7 @@ async function api(path, options = {}, _retryCount = 0){
 
   if(!res.ok){
     let detail = 'Request failed';
-    try{ detail = (await res.json()).detail || detail; }catch(e){ /* ignore */ }
+    try{ detail = extractErrorDetail(await res.json(), detail); }catch(e){ /* ignore */ }
     throw new Error(detail);
   }
 
@@ -69,7 +95,7 @@ async function apiLogin(email, password){
   const res = await fetch(`${API_BASE}/auth/login`, { method: 'POST', body: form });
   if(!res.ok){
     let detail = 'Login failed';
-    try{ detail = (await res.json()).detail || detail; }catch(e){ /* ignore */ }
+    try{ detail = extractErrorDetail(await res.json(), detail); }catch(e){ /* ignore */ }
     throw new Error(detail);
   }
   const data = await res.json();
@@ -81,7 +107,7 @@ async function apiGuestLogin(){
   const res = await fetch(`${API_BASE}/auth/guest`, { method: 'POST' });
   if(!res.ok){
     let detail = 'Guest mode could not be started';
-    try{ detail = (await res.json()).detail || detail; }catch(e){ /* ignore */ }
+    try{ detail = extractErrorDetail(await res.json(), detail); }catch(e){ /* ignore */ }
     throw new Error(detail);
   }
   const data = await res.json();

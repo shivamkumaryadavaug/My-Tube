@@ -132,14 +132,7 @@ function clearSavedPosition(video) {
   } catch (_) {}
 }
 
-function escapeHtml(value) {
-  return String(value ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
+// escapeHtml is defined once, in app.js (loaded before this file on every page).
 
 function setPlayerStatus(text) {
   const el = document.getElementById('playerStatus');
