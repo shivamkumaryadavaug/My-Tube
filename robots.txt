@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard.html
+Disallow: /library.html
+Disallow: /playlist.html
+Disallow: /study.html
+Disallow: /progress.html
+Disallow: /channel.html
+Disallow: /settings.html
+Disallow: /add-content.html
+
+Sitemap: https://www.shivamkumaryadav.me/sitemap.xml
