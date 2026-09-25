@@ -1,13 +1,14 @@
 /* MyTube PWA service worker — app shell + offline fallback */
-const CACHE_NAME = "mytube-pwa-v3";
+const CACHE_NAME = "mytube-pwa-v4";
 const APP_SHELL = [
   "./", "./index.html", "./login.html", "./register.html", "./dashboard.html",
   "./library.html", "./playlist.html", "./study.html", "./progress.html",
   "./channel.html", "./settings.html", "./add-content.html", "./offline.html",
+  "./privacy.html", "./terms.html", "./ownership.html", "./contact.html",
   "./manifest.json", "./assets/logo.svg",
   "./assets/icons/icon-192.png", "./assets/icons/icon-512.png", "./assets/icons/icon-512-maskable.png",
   "./css/style.css", "./css/dashboard.css", "./css/library.css", "./css/study.css",
-  "./css/progress.css", "./css/premium-ui.css",
+  "./css/progress.css", "./css/premium-ui.css", "./css/legal.css",
   "./js/app.js", "./js/api.js", "./js/dashboard.js", "./js/library.js", "./js/playlist.js",
   "./js/study.js", "./js/progress.js", "./js/channel.js", "./js/login.js", "./js/register.js", "./js/add-content.js"
 ];
