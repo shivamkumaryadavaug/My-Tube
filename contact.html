@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff202f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MyTube">
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+<meta name="color-scheme" content="dark">
+<title>Contact &amp; Support — MyTube</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css?v=20250919b">
+<link rel="stylesheet" href="css/premium-ui.css?v=20250919b">
+<link rel="stylesheet" href="css/legal.css?v=20250919b">
+</head>
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="assets/logo.svg" alt="MyTube logo"> MyTube</div>
+    <nav class="sidebar-nav" data-app-sidebar-nav></nav>
+  </aside>
+
+  <main class="main-content" style="max-width:720px;">
+    <a href="settings.html" class="legal-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Settings
+    </a>
+
+    <div class="page-header">
+      <h1>Contact &amp; Support</h1>
+      <p>Get help with your MyTube account or study data.</p>
+    </div>
+
+    <section class="card settings-section legal-content">
+      <h2>MyTube support</h2>
+      <p>For any of the topics below, reach out at: <a href="mailto:shivamkumaryadavaug11@gmail.com">shivamkumaryadavaug11@gmail.com</a></p>
+    </section>
+
+    <section class="card settings-section legal-content">
+      <h2>What we can help with</h2>
+      <ul>
+        <li><strong>Account support</strong> — trouble signing in, guest sessions, or display name/password changes</li>
+        <li><strong>Study progress issues</strong> — playlists, completion status, or streaks not behaving as expected</li>
+        <li><strong>Bug reports</strong> — anything in the app that isn't working correctly</li>
+        <li><strong>Privacy / data requests</strong> — questions about the data described in the <a href="privacy.html">Privacy Policy</a></li>
+        <li><strong>Account deletion requests</strong> — you can delete your own account directly from <strong>Settings → Danger Zone</strong>; contact us only if you need help with that process</li>
+        <li><strong>Copyright / content concerns</strong> — questions about YouTube content accessed through MyTube (see <a href="ownership.html">Ownership &amp; Credits</a>)</li>
+        <li><strong>Technical support</strong> — general help using the app</li>
+      </ul>
+    </section>
+
+    <section class="card settings-section legal-content">
+      <h2>Before you write in</h2>
+      <p>To help us respond faster, please include your account email (or note that you're using a guest session), the device/app you're using (web or Android), and a short description of the issue.</p>
+    </section>
+
+    <div class="legal-nav-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="ownership.html">Ownership &amp; Credits</a>
+    </div>
+  </main>
+</div>
+
+<nav class="bottom-nav" data-app-bottom-nav></nav>
+
+<script src="js/app.js?v=20250919b"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('Service worker registered:', reg.scope))
+      .catch(err => console.error('Service worker registration failed:', err));
+  }
+</script>
+</body>
+</html>

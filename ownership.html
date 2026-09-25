@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff202f">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="MyTube">
+<link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+<meta name="color-scheme" content="dark">
+<title>Ownership &amp; Credits — MyTube</title>
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css?v=20250919b">
+<link rel="stylesheet" href="css/premium-ui.css?v=20250919b">
+<link rel="stylesheet" href="css/legal.css?v=20250919b">
+</head>
+<body>
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo"><img src="assets/logo.svg" alt="MyTube logo"> MyTube</div>
+    <nav class="sidebar-nav" data-app-sidebar-nav></nav>
+  </aside>
+
+  <main class="main-content" style="max-width:720px;">
+    <a href="settings.html" class="legal-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      Back to Settings
+    </a>
+
+    <div class="page-header">
+      <h1>Ownership &amp; Credits</h1>
+      <p>MyTube — an independent study-focused application created and maintained by Shivam Kumar Yadav.</p>
+    </div>
+
+    <section class="card settings-section legal-content">
+      <p><strong>MyTube is an independent project and is not affiliated with, sponsored by, or endorsed by YouTube or Google.</strong></p>
+    </section>
+
+    <section class="card settings-section legal-content">
+      <h2>1. MyTube original materials</h2>
+      <p>The following are original to MyTube and created for this project: the MyTube name and branding, the MyTube logo artwork, the MyTube user interface design, the MyTube source code (frontend and backend), and the MyTube documentation.</p>
+    </section>
+
+    <section class="card settings-section legal-content">
+      <h2>2. YouTube and creator content</h2>
+      <p>All videos, thumbnails, titles, descriptions, channel branding, and other content displayed inside MyTube belong to their original YouTube creators and rights holders. MyTube does not claim ownership of YouTube videos, thumbnails, channels, or creator content. MyTube simply helps you organize and study content you already have access to on YouTube.</p>
+    </section>
+
+    <section class="card settings-section legal-content">
+      <h2>3. YouTube / Google trademarks</h2>
+      <p>YouTube, the YouTube logo, and Google are trademarks of Google LLC. Their use or reference within MyTube is solely to describe interoperability with the YouTube platform, and does not imply any affiliation, sponsorship, or endorsement.</p>
+    </section>
+
+    <section class="card settings-section legal-content">
+      <h2>4. Open-source and third-party software</h2>
+      <p>MyTube is built using the YouTube Data API and YouTube IFrame Player provided by Google/YouTube, along with standard open-source libraries and tools common to modern web and Android development. These remain the property of their respective owners and are used under their respective licenses.</p>
+    </section>
+
+    <section class="card settings-section legal-content">
+      <h2>5. Content responsibility</h2>
+      <p>MyTube is not responsible for the content, accuracy, or availability of third-party YouTube videos accessed through the app. Responsibility for that content rests with the original creators and with YouTube/Google.</p>
+    </section>
+
+    <section class="card settings-section legal-content">
+      <h2>6. Credits</h2>
+      <p>MyTube is designed, built, and maintained by Shivam Kumar Yadav as an independent study tool for students.</p>
+    </section>
+
+    <section class="card settings-section legal-content">
+      <h2>7. Project owner</h2>
+      <p><strong>Shivam Kumar Yadav</strong><br>
+      Website: <a href="https://www.shivamkumaryadav.me" target="_blank" rel="noopener">shivamkumaryadav.me</a></p>
+    </section>
+
+    <div class="legal-nav-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+      <a href="contact.html">Contact &amp; Support</a>
+    </div>
+  </main>
+</div>
+
+<nav class="bottom-nav" data-app-bottom-nav></nav>
+
+<script src="js/app.js?v=20250919b"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('Service worker registered:', reg.scope))
+      .catch(err => console.error('Service worker registration failed:', err));
+  }
+</script>
+</body>
+</html>
