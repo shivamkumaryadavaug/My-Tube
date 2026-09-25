@@ -734,10 +734,7 @@ function fullscreenPlayer() {
   if (!target?.requestFullscreen) return;
 
   target.requestFullscreen()
-    .then(() => {
-      lockLandscapeOrientation();
-      syncFullscreenOrientationFallback();
-    })
+    .then(() => lockLandscapeOrientation())
     .catch(() => {});
 }
 
@@ -758,23 +755,6 @@ function unlockOrientationOnExitFullscreen() {
   if (orientation && typeof orientation.unlock === 'function') {
     try { orientation.unlock(); } catch (e) { /* no-op */ }
   }
-}
-
-/** If the real Screen Orientation lock silently failed (as it does in
- *  Android WebView), fall back to rotating the player with CSS so the
- *  video still shows as true landscape instead of a tall portrait box.
- *  Re-checked on resize too, so if the OS lock does succeed asynchronously
- *  (or the person physically rotates their phone), the CSS fallback backs
- *  off on its own instead of double-rotating. */
-function syncFullscreenOrientationFallback() {
-  const target = document.getElementById('studyPlayer');
-  if (!target) return;
-  if (!document.fullscreenElement) {
-    target.classList.remove('force-landscape-fullscreen');
-    return;
-  }
-  const isPortrait = window.innerHeight > window.innerWidth;
-  target.classList.toggle('force-landscape-fullscreen', isPortrait);
 }
 
 function wirePlayerControls() {
@@ -803,8 +783,6 @@ function wirePlayerControls() {
     .addEventListener('click', fullscreenPlayer);
 
   document.addEventListener('fullscreenchange', unlockOrientationOnExitFullscreen);
-  document.addEventListener('fullscreenchange', syncFullscreenOrientationFallback);
-  window.addEventListener('resize', syncFullscreenOrientationFallback);
 
   document
     .getElementById('playerScrub')
