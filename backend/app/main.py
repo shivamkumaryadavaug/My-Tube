@@ -38,6 +38,11 @@ app.include_router(channels.router)
 app.include_router(progress.router)
 
 
+@app.get("/", tags=["health"])
+def root():
+    return {"name": "MyTube API", "version": "1.0.0", "status": "ok", "docs": "/health"}
+
+
 @app.get("/health", tags=["health"])
 def health():
     return {"status": "ok"}

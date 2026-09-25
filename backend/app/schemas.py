@@ -4,13 +4,13 @@ Pydantic schemas — request bodies and response shapes for the API.
 from datetime import datetime
 from typing import Optional, List
 
-from pydantic import BaseModel, EmailStr, ConfigDict
+from pydantic import BaseModel, EmailStr, ConfigDict, Field
 
 
 # ---------------- Auth ----------------
 class UserCreate(BaseModel):
     email: EmailStr
-    password: str
+    password: str = Field(min_length=8, max_length=72)
     display_name: Optional[str] = "Student"
 
 
@@ -22,7 +22,10 @@ class UserLogin(BaseModel):
 class UserOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
     id: int
-    email: EmailStr
+    # Optional rather than a strict required EmailStr: this endpoint must
+    # never 500 on serialization, even for a legacy/edge-case row with a
+    # missing or malformed email — better to return null than crash.
+    email: Optional[str] = None
     display_name: str
     created_at: datetime
 
@@ -37,8 +40,11 @@ class ProfileUpdate(BaseModel):
 
 
 class PasswordChange(BaseModel):
-    current_password: str
-    new_password: str
+    # Optional: guest accounts have a random password the user never saw,
+    # so the frontend never collects one — the router skips verification
+    # entirely for guest accounts rather than relying on a client-sent value.
+    current_password: Optional[str] = None
+    new_password: str = Field(min_length=8, max_length=72)
 
 
 class AccountDelete(BaseModel):
