@@ -122,7 +122,9 @@ def change_password(
     # nothing meaningful to verify — anyone already holding a valid guest
     # session token is treated as authorized to set a real password.
     if not _is_guest(current_user):
-        if not auth_utils.verify_password(payload.current_password, current_user.hashed_password):
+        if not payload.current_password or not auth_utils.verify_password(
+            payload.current_password, current_user.hashed_password
+        ):
             raise HTTPException(status_code=400, detail="Current password is incorrect.")
 
     current_user.hashed_password = auth_utils.hash_password(payload.new_password)
