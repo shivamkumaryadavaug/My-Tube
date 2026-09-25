@@ -64,6 +64,11 @@ jobs:
 
       - name: Grant execute permission to gradlew
         run: chmod +x android/gradlew
+        
+      - name: Use a fixed debug signing key (keeps app data across reinstalls)
+        run: |
+          mkdir -p ~/.android
+          cp debug.keystore ~/.android/debug.keystore
 
       - name: Build debug APK
         working-directory: android
