@@ -436,7 +436,7 @@ function initializeYouTubePlayer() {
     videoId: youtubeId,
     playerVars: {
       autoplay: 0,
-      controls: 1,
+      controls: 0,
       rel: 0,
       playsinline: 1,
       modestbranding: 1,
@@ -732,11 +732,19 @@ function fullscreenPlayer() {
   // video, controls, and wrapper all resize together as one unit — targeting
   // the iframe directly leaves the surrounding wrapper divs at their old
   // size, which is what caused the size-mismatch bar seen in fullscreen.
+  if (document.fullscreenElement) {
+    document.exitFullscreen().catch(() => {});
+    return;
+  }
+
   const target = document.getElementById('studyPlayer');
   if (!target?.requestFullscreen) return;
 
   target.requestFullscreen()
-    .then(() => lockLandscapeOrientation())
+    .then(() => {
+      lockLandscapeOrientation();
+      syncFullscreenOrientationFallback();
+    })
     .catch(() => {});
 }
 
@@ -757,6 +765,23 @@ function unlockOrientationOnExitFullscreen() {
   if (orientation && typeof orientation.unlock === 'function') {
     try { orientation.unlock(); } catch (e) { /* no-op */ }
   }
+}
+
+/** If the real Screen Orientation lock silently failed (as it does in
+ *  Android WebView), fall back to rotating the player with CSS so the
+ *  video still shows as true landscape instead of a tall portrait box.
+ *  Re-checked on resize too, so if the OS lock does succeed asynchronously
+ *  (or the person physically rotates their phone), the CSS fallback backs
+ *  off on its own instead of double-rotating. */
+function syncFullscreenOrientationFallback() {
+  const target = document.getElementById('studyPlayer');
+  if (!target) return;
+  if (!document.fullscreenElement) {
+    target.classList.remove('force-landscape-fullscreen');
+    return;
+  }
+  const isPortrait = window.innerHeight > window.innerWidth;
+  target.classList.toggle('force-landscape-fullscreen', isPortrait);
 }
 
 function wirePlayerControls() {
@@ -785,6 +810,8 @@ function wirePlayerControls() {
     .addEventListener('click', fullscreenPlayer);
 
   document.addEventListener('fullscreenchange', unlockOrientationOnExitFullscreen);
+  document.addEventListener('fullscreenchange', syncFullscreenOrientationFallback);
+  window.addEventListener('resize', syncFullscreenOrientationFallback);
 
   document
     .getElementById('playerScrub')
