@@ -1,0 +1,32 @@
+/* ==========================================================================
+   MyTube — legal.css
+   Shared prose styling for the informational/legal pages (privacy, terms,
+   ownership, contact). Reuses existing design tokens from style.css —
+   no new colors or radii introduced.
+   ========================================================================== */
+
+.legal-back{
+  display:inline-flex;align-items:center;gap:6px;
+  color:var(--text-secondary);font-size:.88rem;text-decoration:none;
+  margin-bottom:14px;
+}
+.legal-back:hover{color:var(--accent);}
+.legal-back svg{width:16px;height:16px;}
+
+.legal-meta{color:var(--text-tertiary);font-size:.82rem;margin:-6px 0 22px;}
+
+.legal-content h2{margin:0 0 12px;font-size:1.1rem;}
+.legal-content h3{font-size:.98rem;margin:18px 0 6px;color:var(--text-primary);}
+.legal-content h3:first-child{margin-top:0;}
+.legal-content p{color:var(--text-secondary);line-height:1.7;font-size:.94rem;margin:0 0 12px;}
+.legal-content ul{margin:6px 0 14px 20px;padding:0;}
+.legal-content li{color:var(--text-secondary);line-height:1.7;font-size:.94rem;margin-bottom:4px;}
+.legal-content strong{color:var(--text-primary);font-weight:600;}
+.legal-content a{color:var(--accent);}
+
+.legal-nav-links{display:flex;flex-wrap:wrap;gap:10px;margin:28px 0 4px;}
+.legal-nav-links a{
+  color:var(--text-secondary);font-size:.85rem;text-decoration:none;
+  padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius-full);
+}
+.legal-nav-links a:hover{color:var(--text-primary);border-color:var(--border-strong);}
